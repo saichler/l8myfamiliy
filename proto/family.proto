@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package l8myfamily;
+
+option java_multiple_files = true;
+option java_outer_classname = "L8MyFamily";
+option java_package = "com.types.l8MyFamily";
+option go_package = "./types/l8myfamily";
+
+import "api.proto";
+
+message Location {
+  string device_id = 1;
+  float longitude = 3;
+  float latitude = 4;
+}
+
+message DeviceList {
+  repeated Device list = 1;
+  l8api.L8MetaData metadata = 2;
+}
+
+message Device {
+  string id = 1;
+  string name = 2;
+  string familyId = 3;
+  string familyName = 4;
+  string memberId = 5;
+  string memberName = 6;
+  string activity = 7;
+  float longitude = 8;
+  float latitude = 9;
+}
+
+message Member {
+  string id = 1;
+  string name = 2;
+  map<string, Device> devices = 3;
+}
+
+message Activity {
+  string memberId = 1;
+  int64 time = 2;
+  string activity = 3;
+  int64 len = 4;
+}
+
+message Family {
+  string id = 1;
+  string name = 2;
+  map<string, Member> members = 3;
+}

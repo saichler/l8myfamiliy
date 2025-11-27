@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title id="pageTitle">Family Locator</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="map-body">
+    <header class="app-header">
+        <h1 id="familyTitle">The Family</h1>
+        <button id="logoutBtn" class="logout-btn" title="Logout">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+            </svg>
+        </button>
+    </header>
+
+    <main class="map-container">
+        <div id="map"></div>
+    </main>
+
+    <nav class="member-list-container">
+        <div class="member-list-header">
+            <span>Family Members</span>
+            <button id="toggleMemberList" class="toggle-btn">
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                    <path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+                </svg>
+            </button>
+        </div>
+        <div id="memberList" class="member-list"></div>
+    </nav>
+
+    <div id="devicePopup" class="device-popup hidden">
+        <div class="popup-content">
+            <button class="popup-close" id="closePopup">&times;</button>
+            <div class="popup-header">
+                <div class="popup-avatar" id="popupAvatar"></div>
+                <div class="popup-info">
+                    <h3 id="popupMemberName"></h3>
+                    <p id="popupDeviceName"></p>
+                </div>
+            </div>
+            <div class="popup-details">
+                <div class="popup-activity">
+                    <span class="activity-label">Current Activity:</span>
+                    <span id="popupActivity" class="activity-value"></span>
+                </div>
+                <div class="popup-location">
+                    <span class="location-label">Location:</span>
+                    <span id="popupLocation" class="location-value"></span>
+                </div>
+            </div>
+            <button id="centerOnDevice" class="center-btn">Center on Map</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="map.js"></script>
+</body>
+</html>
