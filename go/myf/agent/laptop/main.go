@@ -26,6 +26,8 @@ import (
 	"golang.org/x/term"
 )
 
+const defaultEndpoint = "https://www.probler.dev:9092"
+
 var (
 	deviceID      = ""
 	deviceName    = ""
@@ -190,7 +192,10 @@ func loadOrCreateConfig() error {
 
 	needsSave := false
 	if website == "" {
-		website = promptForInput("Enter website URL (e.g., https://example.com): ")
+		website = promptForInput("Enter website URL [" + defaultEndpoint + "]: ")
+		if website == "" {
+			website = defaultEndpoint
+		}
 		needsSave = true
 	}
 	if cfg.SkipTLSVerify == nil {
@@ -218,7 +223,10 @@ func createNewConfig() error {
 	log.Printf("Generated new device ID: %s", deviceID)
 
 	deviceName = promptForInput("Enter device name (e.g., My Laptop): ")
-	website = promptForInput("Enter website URL (e.g., https://example.com): ")
+	website = promptForInput("Enter website URL [" + defaultEndpoint + "]: ")
+	if website == "" {
+		website = defaultEndpoint
+	}
 	validateCert := promptForYesNo("Validate server certificate?")
 	skipTLSVerify = !validateCert
 	user = promptForInput("Enter username: ")

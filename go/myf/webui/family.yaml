@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: family-vnet
+  labels:
+    name: family-vnet
+
+---
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  namespace: family-vnet
+  name: family-vnet
+  labels:
+    app: family-vnet
+spec:
+  selector:
+    matchLabels:
+      app: family-vnet
+  template:
+    metadata:
+      labels:
+        app: family-vnet
+    spec:
+      hostNetwork: true
+      containers:
+        - name: family-vnet
+          image: saichler/family-web:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 12343
+          volumeMounts:
+            - name: hdata
+              mountPath: /data
+      volumes:
+        - name: hdata
+          hostPath:
+            path: /data
+            type: DirectoryOrCreate

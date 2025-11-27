@@ -59,7 +59,7 @@
             android:id="@+id/endpoint_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="https://server:port"
+            android:hint="https://www.probler.dev:9092"
             android:inputType="textUri"
             android:layout_marginBottom="16dp" />
 

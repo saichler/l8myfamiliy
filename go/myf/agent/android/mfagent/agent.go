@@ -22,10 +22,12 @@ import (
 	"github.com/google/uuid"
 )
 
+const DefaultEndpoint = "https://www.probler.dev:9092"
+
 var (
 	deviceID      = ""
 	deviceName    = ""
-	website       = ""
+	website       = DefaultEndpoint
 	user          = ""
 	pass          = ""
 	bearerToken   = ""
