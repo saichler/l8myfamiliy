@@ -47,6 +47,10 @@ func UpdateDevice(id string, lg, lt float32, vnic ifs.IVNic) {
 	if ok {
 		device := &l8myfamily.Device{Id: id, Longitude: lg, Latitude: lt}
 		exist := sv.Get(object.New(nil, device), vnic)
+		if exist == nil {
+			fmt.Println("No Device exist for ", id)
+			return
+		}
 		existDevice := exist.Element().(*l8myfamily.Device)
 		fmt.Println(existDevice.Name)
 		device.FamilyId = "admin"

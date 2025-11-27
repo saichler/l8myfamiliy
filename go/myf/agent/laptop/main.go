@@ -319,6 +319,8 @@ func registerDevice() error {
 		return fmt.Errorf("failed to marshal device request: %w", err)
 	}
 
+	log.Printf("POST to %s: %s", deviceEndpoint, string(data))
+
 	req, err := http.NewRequest("POST", deviceEndpoint, bytes.NewReader(data))
 	if err != nil {
 		return fmt.Errorf("failed to create request: %w", err)
@@ -333,12 +335,17 @@ func registerDevice() error {
 	}
 	defer resp.Body.Close()
 
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("failed to read response body: %w", err)
+	}
+
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		body, _ := io.ReadAll(resp.Body)
 		return fmt.Errorf("server returned status %d: %s", resp.StatusCode, string(body))
 	}
 
 	log.Printf("Device registered: %s (%s)", deviceName, deviceID)
+	log.Printf("Response from /probler/53/Family: %s", string(body))
 	return nil
 }
 
