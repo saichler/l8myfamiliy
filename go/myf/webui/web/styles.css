@@ -6,17 +6,21 @@
 }
 
 :root {
-    --primary-color: #4a90d9;
-    --primary-dark: #3a7bc8;
-    --secondary-color: #6c757d;
-    --success-color: #28a745;
-    --danger-color: #dc3545;
-    --warning-color: #ffc107;
-    --light-color: #f8f9fa;
-    --dark-color: #343a40;
+    /* Monochromatic color palette */
+    --primary-color: #4a5568;
+    --primary-dark: #2d3748;
+    --primary-light: #718096;
+    --secondary-color: #a0aec0;
+    --accent-color: #1a202c;
+    --success-color: #48bb78;
+    --danger-color: #e53e3e;
+    --warning-color: #ed8936;
+    --light-color: #f7fafc;
+    --lighter-color: #edf2f7;
+    --dark-color: #1a202c;
     --white: #ffffff;
-    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.15);
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.12);
     --border-radius: 12px;
     --transition: all 0.3s ease;
 }
@@ -31,14 +35,64 @@ html, body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Login Page Styles */
+/* Login Page Styles - Monochromatic */
 .login-body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 50%, #a0aec0 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background illustration pattern */
+.login-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a5568' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+/* Floating illustration elements */
+.login-illustration {
+    position: absolute;
+    opacity: 0.15;
+    z-index: 0;
+}
+
+.login-illustration-1 {
+    top: 10%;
+    left: 5%;
+    width: 120px;
+    height: 120px;
+}
+
+.login-illustration-2 {
+    top: 20%;
+    right: 8%;
+    width: 80px;
+    height: 80px;
+}
+
+.login-illustration-3 {
+    bottom: 15%;
+    left: 10%;
+    width: 100px;
+    height: 100px;
+}
+
+.login-illustration-4 {
+    bottom: 25%;
+    right: 5%;
+    width: 90px;
+    height: 90px;
 }
 
 .login-container {
@@ -48,6 +102,9 @@ html, body {
     width: 100%;
     max-width: 400px;
     padding: 40px 30px;
+    position: relative;
+    z-index: 1;
+    border: 1px solid var(--lighter-color);
 }
 
 .login-header {
@@ -58,6 +115,11 @@ html, body {
 .login-icon {
     color: var(--primary-color);
     margin-bottom: 15px;
+    position: relative;
+}
+
+.login-icon svg {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .login-header h1 {
@@ -87,22 +149,24 @@ html, body {
 .form-group label {
     font-size: 0.9rem;
     font-weight: 500;
-    color: var(--dark-color);
+    color: var(--primary-dark);
 }
 
 .form-group input[type="text"],
 .form-group input[type="password"] {
     padding: 14px 16px;
-    border: 2px solid #e1e5e9;
+    border: 2px solid var(--lighter-color);
     border-radius: 8px;
     font-size: 1rem;
     transition: var(--transition);
     outline: none;
+    background: var(--light-color);
 }
 
 .form-group input:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.1);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(74, 85, 104, 0.1);
 }
 
 .remember-me {
@@ -161,8 +225,9 @@ html, body {
     overflow: hidden;
 }
 
+/* Full-frame header with illustration */
 .app-header {
-    background: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
     color: var(--white);
     padding: 12px 16px;
     display: flex;
@@ -170,16 +235,61 @@ html, body {
     align-items: center;
     box-shadow: var(--shadow);
     z-index: 1000;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Header background pattern */
+.app-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 10c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10-4.477-10-10-10zm0 2a8 8 0 110 16 8 8 0 010-16z'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+/* Header decorative elements */
+.app-header::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.header-icon {
+    width: 28px;
+    height: 28px;
+    opacity: 0.9;
 }
 
 .app-header h1 {
     font-size: 1.25rem;
     font-weight: 600;
+    position: relative;
+    z-index: 1;
 }
 
 .logout-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 8px;
     border-radius: 8px;
     cursor: pointer;
@@ -187,10 +297,12 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 1;
 }
 
 .logout-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.25);
 }
 
 .logout-btn svg {
@@ -210,7 +322,7 @@ html, body {
 /* Member List Panel */
 .member-list-container {
     background: var(--white);
-    border-top: 1px solid #e1e5e9;
+    border-top: 1px solid var(--lighter-color);
     max-height: 40vh;
     display: flex;
     flex-direction: column;
@@ -238,7 +350,7 @@ html, body {
     font-weight: 600;
     font-size: 0.9rem;
     color: var(--dark-color);
-    border-bottom: 1px solid #e1e5e9;
+    border-bottom: 1px solid var(--lighter-color);
 }
 
 .toggle-btn {
@@ -250,6 +362,7 @@ html, body {
     align-items: center;
     justify-content: center;
     transition: var(--transition);
+    color: var(--primary-color);
 }
 
 .toggle-btn svg {
@@ -269,14 +382,16 @@ html, body {
     background: var(--white);
     border-radius: 8px;
     margin-bottom: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     cursor: pointer;
     transition: var(--transition);
+    border: 1px solid var(--lighter-color);
 }
 
 .member-card:hover {
     background: var(--light-color);
     transform: translateX(4px);
+    border-color: var(--secondary-color);
 }
 
 .member-card:last-child {
@@ -325,24 +440,24 @@ html, body {
     font-size: 0.75rem;
     padding: 4px 8px;
     border-radius: 12px;
-    background: #e8f5e9;
-    color: #2e7d32;
+    background: var(--lighter-color);
+    color: var(--primary-color);
     flex-shrink: 0;
 }
 
 .member-activity.driving {
-    background: #fff3e0;
-    color: #ef6c00;
+    background: #feebc8;
+    color: #c05621;
 }
 
 .member-activity.walking {
-    background: #e3f2fd;
-    color: #1976d2;
+    background: #e2e8f0;
+    color: var(--primary-dark);
 }
 
 .member-activity.running {
-    background: #fce4ec;
-    color: #c2185b;
+    background: #fed7e2;
+    color: #b83280;
 }
 
 /* Device Popup */
@@ -352,7 +467,7 @@ html, body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(26, 32, 44, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -372,6 +487,7 @@ html, body {
     padding: 24px;
     position: relative;
     box-shadow: var(--shadow-lg);
+    border: 1px solid var(--lighter-color);
 }
 
 .popup-close {
@@ -385,6 +501,10 @@ html, body {
     cursor: pointer;
     line-height: 1;
     padding: 4px;
+}
+
+.popup-close:hover {
+    color: var(--primary-dark);
 }
 
 .popup-header {
@@ -423,6 +543,7 @@ html, body {
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 20px;
+    border: 1px solid var(--lighter-color);
 }
 
 .popup-activity,
@@ -434,7 +555,7 @@ html, body {
 }
 
 .popup-activity {
-    border-bottom: 1px solid #e1e5e9;
+    border-bottom: 1px solid var(--lighter-color);
 }
 
 .activity-label,
@@ -505,6 +626,7 @@ html, body {
 .leaflet-popup-content-wrapper {
     border-radius: 8px;
     padding: 0;
+    box-shadow: var(--shadow);
 }
 
 .leaflet-popup-content {
@@ -515,27 +637,28 @@ html, body {
 .leaflet-popup-content strong {
     display: block;
     margin-bottom: 4px;
+    color: var(--dark-color);
 }
 
-/* Activity Colors */
-.activity-stationary { background-color: #4caf50; }
-.activity-walking { background-color: #2196f3; }
-.activity-running { background-color: #e91e63; }
-.activity-driving { background-color: #ff9800; }
-.activity-cycling { background-color: #9c27b0; }
-.activity-unknown { background-color: #607d8b; }
+/* Activity Colors - Monochromatic variants */
+.activity-stationary { background-color: #68d391; }
+.activity-walking { background-color: #63b3ed; }
+.activity-running { background-color: #f687b3; }
+.activity-driving { background-color: #f6ad55; }
+.activity-cycling { background-color: #b794f4; }
+.activity-unknown { background-color: #a0aec0; }
 
-/* Color Palette for Members */
-.color-1 { background-color: #e91e63; }
-.color-2 { background-color: #9c27b0; }
-.color-3 { background-color: #673ab7; }
-.color-4 { background-color: #3f51b5; }
-.color-5 { background-color: #2196f3; }
-.color-6 { background-color: #00bcd4; }
-.color-7 { background-color: #009688; }
-.color-8 { background-color: #4caf50; }
-.color-9 { background-color: #ff9800; }
-.color-10 { background-color: #ff5722; }
+/* Color Palette for Members - Softer tones */
+.color-1 { background-color: #e53e3e; }
+.color-2 { background-color: #805ad5; }
+.color-3 { background-color: #5a67d8; }
+.color-4 { background-color: #3182ce; }
+.color-5 { background-color: #00b5d8; }
+.color-6 { background-color: #38b2ac; }
+.color-7 { background-color: #48bb78; }
+.color-8 { background-color: #ed8936; }
+.color-9 { background-color: #dd6b20; }
+.color-10 { background-color: #e53e3e; }
 
 /* Responsive Adjustments */
 @media (max-width: 380px) {
@@ -564,7 +687,7 @@ html, body {
 .spinner {
     width: 40px;
     height: 40px;
-    border: 4px solid #e1e5e9;
+    border: 4px solid var(--lighter-color);
     border-top-color: var(--primary-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
