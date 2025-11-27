@@ -19,7 +19,7 @@ const (
 )
 
 func Activate(vnic ifs.IVNic) {
-	serviceConfig := ifs.NewServiceLevelAgreement(&base.BaseService{}, ServiceName, ServiceArea, true, nil)
+	serviceConfig := ifs.NewServiceLevelAgreement(&base.BaseService{}, ServiceName, ServiceArea, true, &DeviceCallback{})
 
 	services := &l8services.L8Services{}
 	services.ServiceToAreas = make(map[string]*l8services.L8ServiceAreas)

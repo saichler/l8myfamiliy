@@ -8,13 +8,15 @@ metadata:
 ---
 
 apiVersion: apps/v1
-kind: DaemonSet
+kind: StatefulSet
 metadata:
   namespace: family-vnet
   name: family-vnet
   labels:
     app: family-vnet
 spec:
+  serviceName: family-net 
+  replicas: 1
   selector:
     matchLabels:
       app: family-vnet
