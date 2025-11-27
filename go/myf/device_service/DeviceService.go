@@ -48,7 +48,7 @@ func UpdateDevice(id string, lg, lt float32, vnic ifs.IVNic) {
 		device := &l8myfamily.Device{Id: id, Longitude: lg, Latitude: lt}
 		exist := sv.Get(object.New(nil, device), vnic)
 		if exist != nil && exist.Error() != nil {
-			fmt.Println("Error: ", exist.Error())
+			fmt.Println("Error for ", id, ": ", exist.Error())
 			return
 		}
 		if exist == nil || exist.Element() == nil {
@@ -56,9 +56,7 @@ func UpdateDevice(id string, lg, lt float32, vnic ifs.IVNic) {
 			return
 		}
 		existDevice := exist.Element().(*l8myfamily.Device)
-		fmt.Println(existDevice.Name)
-		device.FamilyId = "admin"
 		sv.Patch(object.New(nil, device), vnic)
-		fmt.Println("Device ", id, " updated")
+		fmt.Println("Device ", id, "-", existDevice.FamilyId, "-", existDevice.Name, " updated")
 	}
 }
