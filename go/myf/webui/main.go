@@ -4,12 +4,12 @@ import (
 	"time"
 
 	"github.com/saichler/l8bus/go/overlay/health"
-	"github.com/saichler/l8bus/go/overlay/protocol"
 	"github.com/saichler/l8bus/go/overlay/vnet"
 	"github.com/saichler/l8bus/go/overlay/vnic"
 	"github.com/saichler/l8myfamiliy/go/myf/device_service"
 	"github.com/saichler/l8myfamiliy/go/myf/location_service"
 	"github.com/saichler/l8myfamiliy/go/types/l8myfamily"
+	"github.com/saichler/l8reflect/go/reflect/helping"
 	"github.com/saichler/l8reflect/go/reflect/introspecting"
 	"github.com/saichler/l8services/go/services/manager"
 	"github.com/saichler/l8types/go/ifs"
@@ -17,6 +17,7 @@ import (
 	"github.com/saichler/l8types/go/types/l8health"
 	"github.com/saichler/l8types/go/types/l8sysconfig"
 	"github.com/saichler/l8types/go/types/l8web"
+	"github.com/saichler/l8utils/go/utils/ipsegment"
 	"github.com/saichler/l8utils/go/utils/logger"
 	"github.com/saichler/l8utils/go/utils/registry"
 	"github.com/saichler/l8utils/go/utils/resources"
@@ -39,7 +40,7 @@ func main() {
 
 func startWebServer(port int, cert string) {
 	serverConfig := &server.RestServerConfig{
-		Host:           protocol.MachineIP,
+		Host:           ipsegment.MachineIP,
 		Port:           port,
 		Authentication: false,
 		CertName:       cert,
@@ -76,10 +77,10 @@ func CreateVnic(vnet uint32, name string) ifs.IVNic {
 	resources := CreateResources(name)
 
 	node, _ := resources.Introspector().Inspect(&l8myfamily.Device{})
-	introspecting.AddPrimaryKeyDecorator(node, "Id")
+	helping.AddPrimaryKeyDecorator(node, "Id")
 
 	node, _ = resources.Introspector().Inspect(&l8myfamily.Location{})
-	introspecting.AddPrimaryKeyDecorator(node, "DeviceId")
+	helping.AddPrimaryKeyDecorator(node, "DeviceId")
 
 	nic := vnic.NewVirtualNetworkInterface(resources, nil)
 	nic.Resources().SysConfig().KeepAliveIntervalSeconds = 60

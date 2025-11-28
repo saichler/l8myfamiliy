@@ -4,17 +4,17 @@ import (
 	"time"
 
 	"github.com/saichler/l8bus/go/overlay/health"
-	"github.com/saichler/l8bus/go/overlay/protocol"
 	"github.com/saichler/l8myfamiliy/go/myf/device_service"
 	"github.com/saichler/l8myfamiliy/go/myf/location_service"
 	"github.com/saichler/l8types/go/ifs"
+	"github.com/saichler/l8utils/go/utils/ipsegment"
 	"github.com/saichler/l8web/go/web/server"
 	"github.com/saichler/probler/go/prob/common"
 )
 
 func startWebServer(port int, cert string) {
 	serverConfig := &server.RestServerConfig{
-		Host:           protocol.MachineIP,
+		Host:           ipsegment.MachineIP,
 		Port:           port,
 		Authentication: false,
 		CertName:       cert,

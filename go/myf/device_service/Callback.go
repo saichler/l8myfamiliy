@@ -9,44 +9,14 @@ import (
 
 type DeviceCallback struct{}
 
-func (lc *DeviceCallback) BeforePost(elem interface{}, vnic ifs.IVNic) interface{} {
-	device := elem.(*l8myfamily.Device)
-	fmt.Println("[Device] ", device.Id, "-", device.FamilyId, "-", device.Name)
-	return nil
+func (lc *DeviceCallback) Before(elem interface{}, action ifs.Action, notify bool, vnic ifs.IVNic) (interface{}, error) {
+	if action == ifs.POST {
+		device := elem.(*l8myfamily.Device)
+		fmt.Println("[Device] ", device.Id, "-", device.FamilyId, "-", device.Name)
+	}
+	return nil, nil
 }
 
-func (lc *DeviceCallback) AfterPost(elem interface{}, vnic ifs.IVNic) interface{} {
-	return nil
-}
-
-func (lc *DeviceCallback) BeforePut(elem interface{}, vnic ifs.IVNic) interface{} {
-	return nil
-}
-
-func (lc *DeviceCallback) AfterPut(elem interface{}, vnic ifs.IVNic) interface{} {
-	return nil
-}
-
-func (lc *DeviceCallback) BeforePatch(elem interface{}, vnic ifs.IVNic) interface{} {
-	return nil
-}
-
-func (lc *DeviceCallback) AfterPatch(elem interface{}, vnic ifs.IVNic) interface{} {
-	return nil
-}
-
-func (lc *DeviceCallback) BeforeDelete(elem interface{}, vnic ifs.IVNic) interface{} {
-	return nil
-}
-
-func (lc *DeviceCallback) AfterDelete(elem interface{}, vnic ifs.IVNic) interface{} {
-	return nil
-}
-
-func (lc *DeviceCallback) BeforeGet(elem interface{}, vnic ifs.IVNic) interface{} {
-	return nil
-}
-
-func (lc *DeviceCallback) AfterGet(elem interface{}, vnic ifs.IVNic) interface{} {
-	return nil
+func (lc *DeviceCallback) After(elem interface{}, action ifs.Action, notify bool, vnic ifs.IVNic) (interface{}, error) {
+	return nil, nil
 }
