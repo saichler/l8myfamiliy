@@ -217,6 +217,20 @@ html, body {
     min-height: 20px;
 }
 
+.demo-note {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    padding: 12px;
+    background: var(--light-color);
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+.demo-note strong {
+    color: var(--primary-color);
+}
+
 /* Map Page Styles */
 .map-body {
     display: flex;

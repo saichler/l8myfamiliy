@@ -2,88 +2,497 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <title>Family Locator - Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="L8MyFamily - Keep your loved ones close with real-time family location tracking across all devices.">
+    <meta name="keywords" content="family locator, GPS tracking, family safety, location sharing">
+    <title>L8MyFamily - Family Location Tracking</title>
+    <link rel="stylesheet" href="marketing.css">
 </head>
-<body class="login-body">
-    <!-- Floating illustrations -->
-    <svg class="login-illustration login-illustration-1" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" stroke="#4a5568" stroke-width="2" fill="none"/>
-        <path d="M50 20C35 20 25 35 25 50C25 75 50 90 50 90C50 90 75 75 75 50C75 35 65 20 50 20Z" fill="#4a5568"/>
-        <circle cx="50" cy="45" r="10" fill="#e2e8f0"/>
-    </svg>
-
-    <svg class="login-illustration login-illustration-2" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="40" cy="40" r="35" stroke="#4a5568" stroke-width="2" stroke-dasharray="5 3"/>
-        <circle cx="40" cy="40" r="8" fill="#4a5568"/>
-        <circle cx="20" cy="25" r="5" fill="#4a5568"/>
-        <circle cx="60" cy="30" r="4" fill="#4a5568"/>
-        <circle cx="55" cy="55" r="6" fill="#4a5568"/>
-    </svg>
-
-    <svg class="login-illustration login-illustration-3" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="10" y="20" width="80" height="60" rx="8" stroke="#4a5568" stroke-width="2" fill="none"/>
-        <circle cx="30" cy="50" r="12" fill="#4a5568"/>
-        <circle cx="70" cy="50" r="12" fill="#4a5568"/>
-        <path d="M30 50 L70 50" stroke="#4a5568" stroke-width="2" stroke-dasharray="4 2"/>
-    </svg>
-
-    <svg class="login-illustration login-illustration-4" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M45 10L80 75H10L45 10Z" stroke="#4a5568" stroke-width="2" fill="none"/>
-        <circle cx="45" cy="45" r="15" fill="#4a5568"/>
-        <path d="M45 35V50M45 55V57" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round"/>
-    </svg>
-
-    <div class="login-container">
-        <div class="login-header">
-            <div class="login-icon">
-                <svg viewBox="0 0 64 64" width="64" height="64">
-                    <!-- Location pin with family silhouette -->
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <svg viewBox="0 0 40 40" width="40" height="40">
                     <defs>
-                        <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" style="stop-color:#4a5568"/>
                             <stop offset="100%" style="stop-color:#2d3748"/>
                         </linearGradient>
                     </defs>
-                    <path fill="url(#iconGradient)" d="M32 4C20 4 12 14 12 26C12 44 32 60 32 60C32 60 52 44 52 26C52 14 44 4 32 4Z"/>
-                    <circle cx="32" cy="24" r="12" fill="#e2e8f0"/>
-                    <circle cx="28" cy="22" r="4" fill="#4a5568"/>
-                    <circle cx="36" cy="22" r="4" fill="#4a5568"/>
-                    <ellipse cx="32" cy="30" rx="8" ry="4" fill="#4a5568"/>
+                    <path fill="url(#logoGradient)" d="M20 2C12 2 6 9 6 17C6 29 20 38 20 38C20 38 34 29 34 17C34 9 28 2 20 2Z"/>
+                    <circle cx="20" cy="15" r="6" fill="#e2e8f0"/>
+                    <circle cx="17" cy="14" r="2" fill="#4a5568"/>
+                    <circle cx="23" cy="14" r="2" fill="#4a5568"/>
                 </svg>
+                <span>L8MyFamily</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#downloads">Downloads</a>
+                <a href="app.html" class="btn btn-primary">Sign In</a>
             </div>
-            <h1>Family Locator</h1>
-            <p class="login-subtitle">Keep your loved ones close</p>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+    </nav>
 
-        <form id="loginForm" class="login-form">
-            <div class="form-group">
-                <label for="familyName">Family Name</label>
-                <input type="text" id="familyName" name="familyName" placeholder="Enter family name" required autocomplete="username">
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter password" required autocomplete="current-password">
-            </div>
-
-            <div class="form-group remember-me">
-                <label class="checkbox-container">
-                    <input type="checkbox" id="rememberMe" checked>
-                    <span class="checkmark"></span>
-                    Remember me
-                </label>
-            </div>
-
-            <button type="submit" class="login-btn">Sign In</button>
-
-            <div id="errorMessage" class="error-message"></div>
-        </form>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#downloads">Downloads</a>
+        <a href="app.html" class="btn btn-primary">Sign In</a>
     </div>
 
-    <script src="login.js"></script>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-pattern"></div>
+        </div>
+
+        <!-- Floating Illustrations -->
+        <svg class="hero-illustration hero-illustration-1" viewBox="0 0 120 120" fill="none">
+            <circle cx="60" cy="60" r="50" stroke="#4a5568" stroke-width="2" fill="none" opacity="0.3"/>
+            <circle cx="60" cy="60" r="35" stroke="#4a5568" stroke-width="2" stroke-dasharray="8 4" fill="none" opacity="0.2"/>
+            <path fill="#4a5568" opacity="0.4" d="M60 25C45 25 35 38 35 52C35 72 60 88 60 88C60 88 85 72 85 52C85 38 75 25 60 25Z"/>
+            <circle cx="60" cy="48" r="10" fill="#e2e8f0" opacity="0.6"/>
+        </svg>
+
+        <svg class="hero-illustration hero-illustration-2" viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="40" stroke="#4a5568" stroke-width="2" stroke-dasharray="6 3" fill="none" opacity="0.2"/>
+            <circle cx="50" cy="50" r="8" fill="#4a5568" opacity="0.3"/>
+            <circle cx="25" cy="30" r="6" fill="#4a5568" opacity="0.25"/>
+            <circle cx="75" cy="35" r="5" fill="#4a5568" opacity="0.25"/>
+            <circle cx="70" cy="70" r="7" fill="#4a5568" opacity="0.25"/>
+            <circle cx="30" cy="65" r="4" fill="#4a5568" opacity="0.25"/>
+            <path stroke="#4a5568" stroke-width="1" stroke-dasharray="3 2" opacity="0.2" d="M25 30L50 50M75 35L50 50M70 70L50 50M30 65L50 50"/>
+        </svg>
+
+        <svg class="hero-illustration hero-illustration-3" viewBox="0 0 80 80" fill="none">
+            <rect x="10" y="15" width="60" height="45" rx="6" stroke="#4a5568" stroke-width="2" fill="none" opacity="0.25"/>
+            <rect x="25" y="60" width="30" height="5" fill="#4a5568" opacity="0.2"/>
+            <circle cx="30" cy="38" r="8" fill="#4a5568" opacity="0.2"/>
+            <circle cx="50" cy="38" r="8" fill="#4a5568" opacity="0.2"/>
+            <path stroke="#4a5568" stroke-width="1.5" stroke-dasharray="4 2" opacity="0.3" d="M30 38L50 38"/>
+        </svg>
+
+        <svg class="hero-illustration hero-illustration-4" viewBox="0 0 90 90" fill="none">
+            <path stroke="#4a5568" stroke-width="2" fill="none" opacity="0.2" d="M45 10L80 75H10L45 10Z"/>
+            <circle cx="45" cy="45" r="15" fill="#4a5568" opacity="0.15"/>
+            <path fill="#4a5568" opacity="0.3" d="M45 30C38 30 33 36 33 43C33 53 45 60 45 60C45 60 57 53 57 43C57 36 52 30 45 30Z"/>
+            <circle cx="45" cy="41" r="5" fill="#e2e8f0" opacity="0.4"/>
+        </svg>
+
+        <svg class="hero-illustration hero-illustration-5" viewBox="0 0 60 60" fill="none">
+            <circle cx="30" cy="30" r="25" stroke="#4a5568" stroke-width="2" fill="none" opacity="0.2"/>
+            <path stroke="#4a5568" stroke-width="2" opacity="0.3" d="M30 5V15M30 45V55M5 30H15M45 30H55"/>
+            <circle cx="30" cy="30" r="10" fill="#4a5568" opacity="0.15"/>
+            <circle cx="30" cy="30" r="4" fill="#4a5568" opacity="0.3"/>
+        </svg>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Keep Your Family Close,<br>No Matter the Distance</h1>
+                <p class="hero-subtitle">Real-time location tracking for peace of mind. Know where your loved ones are, anytime, anywhere.</p>
+                <div class="hero-buttons">
+                    <a href="app.html" class="btn btn-primary btn-lg">Get Started Free</a>
+                    <a href="#how-it-works" class="btn btn-outline btn-lg">Learn More</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">Real-time</span>
+                        <span class="stat-label">Location Updates</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">Multi-device</span>
+                        <span class="stat-label">Support</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">Secure</span>
+                        <span class="stat-label">Encrypted Data</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="map-preview">
+                            <svg viewBox="0 0 300 400" class="map-illustration">
+                                <!-- Map background -->
+                                <rect fill="#e2e8f0" width="300" height="400"/>
+                                <!-- Roads -->
+                                <path stroke="#cbd5e0" stroke-width="8" fill="none" d="M0 100 L300 100 M0 200 L300 200 M0 300 L300 300"/>
+                                <path stroke="#cbd5e0" stroke-width="8" fill="none" d="M100 0 L100 400 M200 0 L200 400"/>
+                                <!-- Location pins -->
+                                <g transform="translate(80, 80)">
+                                    <path fill="#e53e3e" d="M15 0C8 0 2 6.5 2 13C2 22 15 32 15 32C15 32 28 22 28 13C28 6.5 22 0 15 0Z"/>
+                                    <circle cx="15" cy="11" r="5" fill="white"/>
+                                </g>
+                                <g transform="translate(180, 150)">
+                                    <path fill="#3182ce" d="M15 0C8 0 2 6.5 2 13C2 22 15 32 15 32C15 32 28 22 28 13C28 6.5 22 0 15 0Z"/>
+                                    <circle cx="15" cy="11" r="5" fill="white"/>
+                                </g>
+                                <g transform="translate(120, 280)">
+                                    <path fill="#48bb78" d="M15 0C8 0 2 6.5 2 13C2 22 15 32 15 32C15 32 28 22 28 13C28 6.5 22 0 15 0Z"/>
+                                    <circle cx="15" cy="11" r="5" fill="white"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="member-preview">
+                            <div class="preview-card">
+                                <div class="preview-avatar" style="background: #e53e3e;">M</div>
+                                <div class="preview-info">
+                                    <span class="preview-name">Mom</span>
+                                    <span class="preview-status">At Home</span>
+                                </div>
+                            </div>
+                            <div class="preview-card">
+                                <div class="preview-avatar" style="background: #3182ce;">D</div>
+                                <div class="preview-info">
+                                    <span class="preview-name">Dad</span>
+                                    <span class="preview-status">At Work</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <!-- Section Decorations -->
+        <svg class="section-decoration features-deco-1" viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="45" stroke="#4a5568" stroke-width="1.5" stroke-dasharray="8 4" fill="none" opacity="0.1"/>
+            <circle cx="50" cy="50" r="30" stroke="#4a5568" stroke-width="1" fill="none" opacity="0.08"/>
+            <circle cx="50" cy="50" r="15" fill="#4a5568" opacity="0.05"/>
+        </svg>
+        <svg class="section-decoration features-deco-2" viewBox="0 0 80 80" fill="none">
+            <path fill="#4a5568" opacity="0.08" d="M40 5C25 5 15 18 15 32C15 52 40 70 40 70C40 70 65 52 65 32C65 18 55 5 40 5Z"/>
+            <circle cx="40" cy="28" r="10" fill="#e2e8f0" opacity="0.15"/>
+        </svg>
+        <div class="container">
+            <div class="section-header">
+                <h2>Everything You Need to Stay Connected</h2>
+                <p>Powerful features designed with families in mind</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <path fill="currentColor" d="M24 12C18 12 14 17 14 22C14 30 24 36 24 36C24 36 34 30 34 22C34 17 30 12 24 12Z"/>
+                            <circle cx="24" cy="21" r="4" fill="white"/>
+                        </svg>
+                    </div>
+                    <h3>Real-Time Tracking</h3>
+                    <p>See family members' locations update in real-time on an interactive map. Never wonder where they are again.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect x="8" y="4" width="32" height="40" rx="4" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <circle cx="24" cy="36" r="3" fill="currentColor"/>
+                            <rect x="14" y="10" width="20" height="20" rx="2" fill="currentColor" opacity="0.3"/>
+                        </svg>
+                    </div>
+                    <h3>Multi-Device Support</h3>
+                    <p>Track phones, tablets, and laptops. Each family member can have multiple devices connected.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect x="6" y="14" width="36" height="24" rx="4" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <circle cx="24" cy="26" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path stroke="currentColor" stroke-width="2" d="M24 22V26L27 28"/>
+                        </svg>
+                    </div>
+                    <h3>Background Tracking</h3>
+                    <p>Location updates continue even when the app runs in the background. Stay informed without interruption.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path stroke="currentColor" stroke-width="3" fill="none" d="M24 4L6 14V24C6 34 14 42 24 44C34 42 42 34 42 24V14L24 4Z"/>
+                            <path stroke="currentColor" stroke-width="3" d="M16 24L22 30L34 18"/>
+                        </svg>
+                    </div>
+                    <h3>Secure & Private</h3>
+                    <p>End-to-end encryption keeps your family's location data safe. Only your family can see where you are.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <circle cx="16" cy="16" r="8" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <circle cx="32" cy="16" r="8" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <circle cx="24" cy="32" r="8" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <path stroke="currentColor" stroke-width="2" d="M16 24V28M32 24V26M20 20L22 26M28 20L26 26"/>
+                        </svg>
+                    </div>
+                    <h3>Family Groups</h3>
+                    <p>Create your family group and invite members. Everyone in the family can see each other's location.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <path stroke="currentColor" stroke-width="3" d="M4 16H44"/>
+                            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                            <circle cx="20" cy="12" r="2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Web Dashboard</h3>
+                    <p>Access your family's locations from any browser. Perfect for checking in from your computer at work.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get Started in Minutes</h2>
+                <p>Simple setup, powerful protection</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Create Your Family</h3>
+                        <p>Sign up and create your family group. Choose a family name that everyone will recognize.</p>
+                    </div>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Install the Apps</h3>
+                        <p>Download our apps on Android phones and laptops. Each device gets its own unique identifier.</p>
+                    </div>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Stay Connected</h3>
+                        <p>Open the web dashboard or app to see everyone's location on the map in real-time.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platforms Section -->
+    <section class="platforms" id="platforms">
+        <div class="container">
+            <div class="section-header">
+                <h2>Available on Your Devices</h2>
+                <p>Track and be tracked from anywhere</p>
+            </div>
+            <div class="platform-cards">
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect x="12" y="4" width="24" height="40" rx="3" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <circle cx="24" cy="38" r="2" fill="currentColor"/>
+                            <rect x="16" y="8" width="16" height="24" rx="1" fill="currentColor" opacity="0.2"/>
+                        </svg>
+                    </div>
+                    <h3>Android App</h3>
+                    <p>GPS-powered tracking with background support. Get precise location updates every 10 seconds.</p>
+                    <ul class="platform-features">
+                        <li>High-accuracy GPS tracking</li>
+                        <li>Background location updates</li>
+                        <li>Automatic device registration</li>
+                        <li>Secure credential storage</li>
+                    </ul>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect x="4" y="8" width="40" height="28" rx="3" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <rect x="16" y="36" width="16" height="4" fill="currentColor"/>
+                            <rect x="12" y="40" width="24" height="2" rx="1" fill="currentColor"/>
+                            <rect x="8" y="12" width="32" height="20" rx="1" fill="currentColor" opacity="0.2"/>
+                        </svg>
+                    </div>
+                    <h3>Laptop Agent</h3>
+                    <p>Track Linux laptops and desktops with our lightweight background agent.</p>
+                    <ul class="platform-features">
+                        <li>GeoClue integration (high accuracy)</li>
+                        <li>IP-based fallback geolocation</li>
+                        <li>Minimal resource usage</li>
+                        <li>Auto-start on boot</li>
+                    </ul>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <path stroke="currentColor" stroke-width="2" d="M24 6V10M24 38V42M6 24H10M38 24H42M12 12L15 15M33 33L36 36M12 36L15 33M33 15L36 12"/>
+                            <circle cx="24" cy="24" r="8" fill="currentColor" opacity="0.2"/>
+                        </svg>
+                    </div>
+                    <h3>Web Dashboard</h3>
+                    <p>Access your family map from any modern browser. No installation required.</p>
+                    <ul class="platform-features">
+                        <li>Interactive map view</li>
+                        <li>Real-time updates</li>
+                        <li>Mobile-friendly design</li>
+                        <li>Secure HTTPS access</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Downloads Section -->
+    <section class="downloads" id="downloads">
+        <!-- Section Decorations -->
+        <svg class="section-decoration downloads-deco-1" viewBox="0 0 120 120" fill="none">
+            <rect x="20" y="30" width="80" height="60" rx="8" stroke="#4a5568" stroke-width="2" fill="none" opacity="0.1"/>
+            <circle cx="45" cy="60" r="12" fill="#4a5568" opacity="0.08"/>
+            <circle cx="75" cy="60" r="12" fill="#4a5568" opacity="0.08"/>
+            <path stroke="#4a5568" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.1" d="M45 60L75 60"/>
+            <path fill="#4a5568" opacity="0.06" d="M60 15L50 30H70L60 15Z"/>
+        </svg>
+        <svg class="section-decoration downloads-deco-2" viewBox="0 0 90 90" fill="none">
+            <circle cx="45" cy="45" r="40" stroke="#4a5568" stroke-width="1.5" stroke-dasharray="6 4" fill="none" opacity="0.08"/>
+            <path stroke="#4a5568" stroke-width="2" opacity="0.1" d="M45 15V35M45 55V75M15 45H35M55 45H75"/>
+            <circle cx="45" cy="45" r="12" fill="#4a5568" opacity="0.06"/>
+        </svg>
+        <div class="container">
+            <div class="section-header">
+                <h2>Download the Apps</h2>
+                <p>Get L8MyFamily on all your devices</p>
+            </div>
+            <div class="download-grid">
+                <a href="https://drive.google.com/file/d/1kIyLT5ifXlKyLZp-pBHZ8kDR1EvtlOCw/view?usp=sharing" class="download-card" target="_blank" rel="noopener">
+                    <div class="download-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path fill="currentColor" d="M24 3L4 12v11.5c0 11 8.5 21.3 20 24.5 11.5-3.2 20-13.5 20-24.5V12L24 3zm0 7.5l4.5 9h9L30 27l3 9-9-6-9 6 3-9-7.5-7.5h9L24 10.5z"/>
+                        </svg>
+                    </div>
+                    <h3>Android</h3>
+                    <p>For Android phones and tablets</p>
+                    <span class="download-btn">Download APK</span>
+                </a>
+                <a href="https://drive.google.com/file/d/1dzT1Z-LtGAVqD6seMfMlZQJvj6JnI3_2/view?usp=sharing" class="download-card" target="_blank" rel="noopener">
+                    <div class="download-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <circle cx="24" cy="24" r="8" fill="currentColor"/>
+                            <path stroke="currentColor" stroke-width="2" d="M24 4V12M24 36V44M4 24H12M36 24H44"/>
+                        </svg>
+                    </div>
+                    <h3>Linux</h3>
+                    <p>For Linux desktops and laptops</p>
+                    <span class="download-btn">Download Agent</span>
+                </a>
+                <a href="https://drive.google.com/file/d/1eNPS-v26FK7LVWwcKePyKeLJRG9F-NIu/view?usp=sharing" class="download-card" target="_blank" rel="noopener">
+                    <div class="download-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect x="4" y="8" width="40" height="28" rx="2" stroke="currentColor" stroke-width="3" fill="none"/>
+                            <path fill="currentColor" d="M8 12h32v20H8z" opacity="0.2"/>
+                            <rect x="20" y="36" width="8" height="4" fill="currentColor"/>
+                            <rect x="14" y="40" width="20" height="2" rx="1" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Windows</h3>
+                    <p>For Windows PCs and laptops</p>
+                    <span class="download-btn">Download Agent</span>
+                </a>
+                <a href="https://drive.google.com/file/d/1ehhei2p5iV1RcXGx3JgGVumdV91qdRb0/view?usp=sharing" class="download-card" target="_blank" rel="noopener">
+                    <div class="download-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path fill="currentColor" d="M24 4C12.954 4 4 12.954 4 24s8.954 20 20 20 20-8.954 20-20S35.046 4 24 4zm0 36c-8.837 0-16-7.163-16-16S15.163 8 24 8s16 7.163 16 16-7.163 16-16 16z"/>
+                            <path fill="currentColor" d="M24 12c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 17l-4-4 1.5-1.5L22 26l6.5-6.5L30 21l-8 8z"/>
+                        </svg>
+                    </div>
+                    <h3>Mac Intel</h3>
+                    <p>For Intel-based Mac computers</p>
+                    <span class="download-btn">Download Agent</span>
+                </a>
+                <a href="https://drive.google.com/file/d/1FMuPXOvWiCGwekheJqRR8KAMmhJlnagb/view?usp=sharing" class="download-card" target="_blank" rel="noopener">
+                    <div class="download-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path fill="currentColor" d="M24 4C12.954 4 4 12.954 4 24s8.954 20 20 20 20-8.954 20-20S35.046 4 24 4zm0 36c-8.837 0-16-7.163-16-16S15.163 8 24 8s16 7.163 16 16-7.163 16-16 16z"/>
+                            <path fill="currentColor" d="M24 12c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 17l-4-4 1.5-1.5L22 26l6.5-6.5L30 21l-8 8z"/>
+                        </svg>
+                    </div>
+                    <h3>Mac Apple Silicon</h3>
+                    <p>For M1/M2/M3 Mac computers</p>
+                    <span class="download-btn">Download Agent</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <!-- CTA Decorations -->
+        <svg class="section-decoration cta-deco-1" viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="45" stroke="white" stroke-width="1.5" fill="none" opacity="0.1"/>
+            <circle cx="50" cy="50" r="30" stroke="white" stroke-width="1" stroke-dasharray="6 3" fill="none" opacity="0.08"/>
+        </svg>
+        <svg class="section-decoration cta-deco-2" viewBox="0 0 80 80" fill="none">
+            <path fill="white" opacity="0.08" d="M40 8C28 8 20 18 20 30C20 48 40 62 40 62C40 62 60 48 60 30C60 18 52 8 40 8Z"/>
+            <circle cx="40" cy="26" r="8" fill="white" opacity="0.1"/>
+        </svg>
+        <svg class="section-decoration cta-deco-3" viewBox="0 0 60 60" fill="none">
+            <circle cx="30" cy="30" r="25" stroke="white" stroke-width="1.5" stroke-dasharray="4 2" fill="none" opacity="0.08"/>
+            <circle cx="30" cy="30" r="10" fill="white" opacity="0.06"/>
+        </svg>
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Keep Your Family Connected?</h2>
+                <p>Join families who trust L8MyFamily for peace of mind.</p>
+                <a href="app.html" class="btn btn-primary btn-lg">Get Started Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <svg viewBox="0 0 40 40" width="32" height="32">
+                            <path fill="#718096" d="M20 2C12 2 6 9 6 17C6 29 20 38 20 38C20 38 34 29 34 17C34 9 28 2 20 2Z"/>
+                            <circle cx="20" cy="15" r="6" fill="#e2e8f0"/>
+                        </svg>
+                        <span>L8MyFamily</span>
+                    </a>
+                    <p>Keeping families connected, one location at a time.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#downloads">Downloads</a>
+                        <a href="app.html">Sign In</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="#how-it-works">How It Works</a>
+                        <a href="#">Documentation</a>
+                        <a href="#">Support</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 L8MyFamily. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="marketing.js"></script>
 </body>
 </html>

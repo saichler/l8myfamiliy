@@ -69,7 +69,7 @@
      * Redirect to login page
      */
     function redirectToLogin() {
-        window.location.href = 'index.html';
+        window.location.href = './';
     }
 
     /**
