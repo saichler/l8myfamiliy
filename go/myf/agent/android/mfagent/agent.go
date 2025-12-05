@@ -25,15 +25,17 @@ import (
 const DefaultEndpoint = "https://www.probler.dev:9092"
 
 var (
-	deviceID      = ""
-	deviceName    = ""
-	website       = DefaultEndpoint
-	user          = ""
-	pass          = ""
-	bearerToken   = ""
-	configDir     = ""
-	skipTLSVerify = false
-	initialized   = false
+	deviceID        = ""
+	deviceName      = ""
+	website         = DefaultEndpoint
+	user            = ""
+	pass            = ""
+	bearerToken     = ""
+	pendingTfaToken = ""
+	configDir       = ""
+	skipTLSVerify   = false
+	initialized     = false
+	tfaRequired     = false
 )
 
 // Config holds the persistent configuration
@@ -51,6 +53,26 @@ type Location struct {
 	DeviceID  string  `json:"device_id"`
 	Latitude  float64 `json:"latitude"`
 	Longitude float64 `json:"longitude"`
+}
+
+// AuthResponse represents the response from the /auth endpoint
+type AuthResponse struct {
+	Token    string `json:"token"`
+	NeedTfa  bool   `json:"needTfa"`
+	SetupTfa bool   `json:"setupTfa"`
+}
+
+// TfaVerifyRequest represents the request body for TFA verification
+type TfaVerifyRequest struct {
+	UserID string `json:"userId"`
+	Code   string `json:"code"`
+	Bearer string `json:"bearer"`
+}
+
+// TfaVerifyResponse represents the response from the /tfaVerify endpoint
+type TfaVerifyResponse struct {
+	Ok    bool   `json:"ok"`
+	Error string `json:"error,omitempty"`
 }
 
 // SetConfigDir sets the directory where config file will be stored.
@@ -93,6 +115,22 @@ func GetUser() string {
 // HasCredentials returns true if both username and password are set
 func HasCredentials() bool {
 	return user != "" && pass != ""
+}
+
+// IsTfaRequired returns true if TFA verification is pending
+func IsTfaRequired() bool {
+	return tfaRequired
+}
+
+// ClearTfaState clears the TFA pending state
+func ClearTfaState() {
+	tfaRequired = false
+	pendingTfaToken = ""
+}
+
+// IsTfaError returns true if the error indicates TFA is required
+func IsTfaError(err error) bool {
+	return err != nil && err.Error() == "TFA_REQUIRED"
 }
 
 // SetDeviceID sets the device ID
@@ -309,7 +347,11 @@ func SaveConfig() error {
 	return nil
 }
 
+// ErrTfaRequired is returned when TFA verification is needed
+var ErrTfaRequired = fmt.Errorf("TFA_REQUIRED")
+
 // Authenticate performs authentication against the server.
+// Returns ErrTfaRequired if TFA verification is needed (call VerifyTfa next).
 // Returns an error if authentication fails.
 func Authenticate() error {
 	if website == "" {
@@ -318,6 +360,10 @@ func Authenticate() error {
 	if user == "" || pass == "" {
 		return fmt.Errorf("credentials not configured")
 	}
+
+	// Clear any previous TFA state
+	tfaRequired = false
+	pendingTfaToken = ""
 
 	authURL := strings.TrimSuffix(website, "/") + "/auth"
 
@@ -342,6 +388,35 @@ func Authenticate() error {
 		return fmt.Errorf("failed to read auth response: %w", err)
 	}
 
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("authentication failed: %s", strings.TrimSpace(string(body)))
+	}
+
+	// Try to parse as JSON first (for TFA detection)
+	var authResp AuthResponse
+	if err := json.Unmarshal(body, &authResp); err == nil {
+		// Check if TFA is required
+		if authResp.NeedTfa {
+			tfaRequired = true
+			pendingTfaToken = authResp.Token
+			return ErrTfaRequired
+		}
+
+		// Check if TFA setup is required (first time login with TFA)
+		if authResp.SetupTfa {
+			// For mobile, we don't support TFA setup - user must set up TFA via web
+			return fmt.Errorf("TFA setup required - please complete TFA setup via web browser first")
+		}
+
+		// Normal successful auth with token in JSON
+		if authResp.Token != "" {
+			bearerToken = authResp.Token
+			initialized = true
+			return nil
+		}
+	}
+
+	// Fallback: treat response as plain token string (legacy support)
 	token := strings.TrimSpace(string(body))
 	if token == "" {
 		return fmt.Errorf("authentication failed: empty response")
@@ -352,6 +427,65 @@ func Authenticate() error {
 	return nil
 }
 
+// VerifyTfa verifies the TFA code after Authenticate returns ErrTfaRequired.
+// The code should be a 6-digit string from the authenticator app.
+// Returns nil on success, error otherwise.
+func VerifyTfa(code string) error {
+	if !tfaRequired || pendingTfaToken == "" {
+		return fmt.Errorf("no TFA verification pending")
+	}
+
+	code = strings.TrimSpace(code)
+	if len(code) != 6 {
+		return fmt.Errorf("invalid TFA code: must be 6 digits")
+	}
+
+	tfaURL := strings.TrimSuffix(website, "/") + "/tfaVerify"
+
+	tfaReq := TfaVerifyRequest{
+		UserID: user,
+		Code:   code,
+		Bearer: pendingTfaToken,
+	}
+	data, err := json.Marshal(tfaReq)
+	if err != nil {
+		return fmt.Errorf("failed to marshal TFA request: %w", err)
+	}
+
+	client := getHTTPClient()
+	resp, err := client.Post(tfaURL, "application/json", bytes.NewReader(data))
+	if err != nil {
+		return fmt.Errorf("TFA verification request failed: %w", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("failed to read TFA response: %w", err)
+	}
+
+	var tfaResp TfaVerifyResponse
+	if err := json.Unmarshal(body, &tfaResp); err != nil {
+		return fmt.Errorf("failed to parse TFA response: %w", err)
+	}
+
+	if !tfaResp.Ok {
+		errMsg := tfaResp.Error
+		if errMsg == "" {
+			errMsg = "invalid verification code"
+		}
+		return fmt.Errorf("TFA verification failed: %s", errMsg)
+	}
+
+	// TFA verification successful - use the pending token as bearer token
+	bearerToken = pendingTfaToken
+	initialized = true
+	tfaRequired = false
+	pendingTfaToken = ""
+
+	return nil
+}
+
 // RegisterDevice registers the device with the server.
 // Must be called after Authenticate.
 func RegisterDevice() error {
@@ -359,7 +493,7 @@ func RegisterDevice() error {
 		return fmt.Errorf("not authenticated")
 	}
 
-	deviceEndpoint := strings.TrimSuffix(website, "/") + "/probler/53/Family"
+	deviceEndpoint := strings.TrimSuffix(website, "/") + "/my-family/53/Family"
 
 	deviceReq := map[string]string{
 		"id":       deviceID,
@@ -395,6 +529,7 @@ func RegisterDevice() error {
 
 // Initialize loads config and authenticates with the server.
 // This is a convenience function that combines LoadConfig and Authenticate.
+// Returns ErrTfaRequired if TFA verification is needed (call VerifyTfa next).
 func Initialize() error {
 	if err := LoadConfig(); err != nil {
 		return fmt.Errorf("failed to load config: %w", err)
@@ -405,6 +540,10 @@ func Initialize() error {
 	}
 
 	if err := Authenticate(); err != nil {
+		// Pass through ErrTfaRequired so caller can handle TFA
+		if err == ErrTfaRequired {
+			return ErrTfaRequired
+		}
 		return fmt.Errorf("failed to authenticate: %w", err)
 	}
 
@@ -429,7 +568,7 @@ func PostLocation(latitude, longitude float64) error {
 		return fmt.Errorf("failed to marshal location: %w", err)
 	}
 
-	locationEndpoint := strings.TrimSuffix(website, "/") + "/probler/53/Location"
+	locationEndpoint := strings.TrimSuffix(website, "/") + "/my-family/53/Location"
 
 	req, err := http.NewRequest("POST", locationEndpoint, bytes.NewReader(data))
 	if err != nil {

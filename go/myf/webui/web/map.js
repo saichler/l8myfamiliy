@@ -45,6 +45,28 @@
      * @returns {boolean} - Whether session is valid
      */
     function checkSession() {
+        // Check for bearer token from new login system
+        const bearerToken = localStorage.getItem('bearerToken');
+        if (bearerToken) {
+            // Extract family name from token or use stored value
+            const storedSession = sessionStorage.getItem(SESSION_KEY);
+            if (storedSession) {
+                try {
+                    const sessionData = JSON.parse(storedSession);
+                    if (sessionData.familyName) {
+                        familyName = sessionData.familyName;
+                        return true;
+                    }
+                } catch (e) {
+                    // Fall through to prompt for family name
+                }
+            }
+            // If no family name stored, use a default or prompt
+            familyName = localStorage.getItem('rememberedUser') || 'Family';
+            return true;
+        }
+
+        // Legacy session check
         const session = sessionStorage.getItem(SESSION_KEY);
         if (!session) {
             redirectToLogin();
@@ -69,7 +91,7 @@
      * Redirect to login page
      */
     function redirectToLogin() {
-        window.location.href = './';
+        window.location.href = 'login/';
     }
 
     /**
@@ -120,7 +142,7 @@
      * @returns {Promise<Array>} - Array of MFDevice objects
      */
     async function fetchDevices() {
-        const token = sessionStorage.getItem('authToken');
+        const token = localStorage.getItem('bearerToken') || sessionStorage.getItem('authToken');
         const headers = {
             'Content-Type': 'application/json'
         };
@@ -131,7 +153,7 @@
 
         const query = `select * from Device where familyId=${familyName}`;
         const bodyParam = encodeURIComponent(JSON.stringify({ text: query }));
-        const url = `/probler/53/Family?body=${bodyParam}`;
+        const url = `/my-family/53/Family?body=${bodyParam}`;
 
         const response = await fetch(url, {
             method: 'GET',
@@ -479,6 +501,8 @@
      * Handle logout
      */
     function handleLogout() {
+        localStorage.removeItem('bearerToken');
+        localStorage.removeItem('rememberedUser');
         sessionStorage.removeItem(SESSION_KEY);
         sessionStorage.removeItem('authToken');
         stopRefreshTimer();

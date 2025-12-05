@@ -1,0 +1,18 @@
+{
+    "login": {
+        "appTitle": "My Family Locator",
+        "appDescription": "Locate Your Loved Ones",
+        "authEndpoint": "/auth",
+        "redirectUrl": "../map.html",
+        "showRememberMe": true,
+        "showRegister": true,
+        "sessionTimeout": 30,
+        "tfaEnabled": true
+    },
+    "api": {
+        "prefix": "/my-family",
+        "usersPath": "/73/users",
+        "rolesPath": "/74/roles",
+        "registryPath": "/registry"
+    }
+}

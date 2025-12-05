@@ -22,7 +22,6 @@ import (
 	"github.com/saichler/l8utils/go/utils/registry"
 	"github.com/saichler/l8utils/go/utils/resources"
 	"github.com/saichler/l8web/go/web/server"
-	"github.com/saichler/probler/go/prob/common"
 )
 
 const (
@@ -44,7 +43,7 @@ func startWebServer(port int, cert string) {
 		Port:           port,
 		Authentication: false,
 		CertName:       cert,
-		Prefix:         common.PREFIX,
+		Prefix:         "/my-family/",
 	}
 	svr, err := server.NewRestServer(serverConfig)
 	if err != nil {

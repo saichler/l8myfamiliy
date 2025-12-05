@@ -31,7 +31,10 @@
                 <a href="#features">Features</a>
                 <a href="#how-it-works">How It Works</a>
                 <a href="#downloads">Downloads</a>
-                <a href="app.html" class="btn btn-primary">Sign In</a>
+                <a href="https://github.com/saichler/l8myfamiliy" target="_blank" rel="noopener">GitHub</a>
+                <a href="#" onclick="openAboutModal(); return false;">About</a>
+                <a href="#" onclick="openDeveloperModal(); return false;" class="developer-link">Developer</a>
+                <a href="login/" class="btn btn-primary">Sign In</a>
             </div>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <span></span>
@@ -46,7 +49,10 @@
         <a href="#features">Features</a>
         <a href="#how-it-works">How It Works</a>
         <a href="#downloads">Downloads</a>
-        <a href="app.html" class="btn btn-primary">Sign In</a>
+        <a href="https://github.com/saichler/l8myfamiliy" target="_blank" rel="noopener">GitHub</a>
+        <a href="#" onclick="openAboutModal(); return false;">About</a>
+        <a href="#" onclick="openDeveloperModal(); return false;" class="developer-link">Developer</a>
+        <a href="login/" class="btn btn-primary">Sign In</a>
     </div>
 
     <!-- Hero Section -->
@@ -99,7 +105,7 @@
                 <h1>Keep Your Family Close,<br>No Matter the Distance</h1>
                 <p class="hero-subtitle">Real-time location tracking for peace of mind. Know where your loved ones are, anytime, anywhere.</p>
                 <div class="hero-buttons">
-                    <a href="app.html" class="btn btn-primary btn-lg">Get Started Free</a>
+                    <a href="login/" class="btn btn-primary btn-lg">Get Started Free</a>
                     <a href="#how-it-works" class="btn btn-outline btn-lg">Learn More</a>
                 </div>
                 <div class="hero-stats">
@@ -453,7 +459,7 @@
             <div class="cta-content">
                 <h2>Ready to Keep Your Family Connected?</h2>
                 <p>Join families who trust L8MyFamily for peace of mind.</p>
-                <a href="app.html" class="btn btn-primary btn-lg">Get Started Now</a>
+                <a href="login/" class="btn btn-primary btn-lg">Get Started Now</a>
             </div>
         </div>
     </section>
@@ -494,5 +500,247 @@
     </footer>
 
     <script src="marketing.js"></script>
+
+    <!-- About Modal - Layer 8 Ecosystem -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>About Layer 8 Ecosystem</h2>
+                <span class="modal-close" onclick="closeAboutModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="about-content">
+                    <svg viewBox="0 0 80 80" class="about-logo">
+                        <defs>
+                            <linearGradient id="aboutLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4a5568"/>
+                                <stop offset="100%" style="stop-color:#2d3748"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="40" cy="40" r="35" fill="url(#aboutLogoGradient)"/>
+                        <text x="40" y="48" text-anchor="middle" fill="white" font-size="24" font-weight="bold">L8</text>
+                    </svg>
+                    <p>
+                        <strong>Layer 8</strong> is an open-source ecosystem providing model-agnostic microservices,
+                        virtual networking, and intelligent service discovery for building scalable distributed systems.
+                    </p>
+                    <a href="https://www.layer-8.dev" target="_blank" rel="noopener" class="btn btn-primary">
+                        Visit layer-8.dev
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Developer Modal -->
+    <div id="developerModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>About the Developer</h2>
+                <span class="modal-close" onclick="closeDeveloperModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="developer-content">
+                    <div class="developer-intro">
+                        <div class="developer-avatar">
+                            <img src="me.gif" alt="Sharon Aicler - Software Architect" class="developer-gif">
+                        </div>
+                        <div class="developer-info">
+                            <h3>Sharon Aicler (saichler@gmail.com)</h3>
+                            <p class="developer-title">Senior Software Architect & Solutions Specialist</p>
+                            <p class="developer-description">
+                                Visionary Software Architect and DevOps Leader with decades of delivering transformative, high-impact technology solutions that accelerate business growth and operational efficiency. Proven expertise in designing and orchestrating distributed, cloud-native architectures in Go and Java, enabling organizations to scale securely and reliably. Recognized for building high-performance, multi-tier frameworks that reduce time-to-market, improve developer productivity, and ensure long-term maintainability.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="expertise-grid">
+                        <div class="expertise-card">
+                            <div class="expertise-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                </svg>
+                            </div>
+                            <h4>Core Technologies</h4>
+                            <ul>
+                                <li>Go (Golang) - Advanced</li>
+                                <li>Kubernetes & Docker</li>
+                                <li>PostgreSQL & Database Design</li>
+                                <li>gRPC & REST APIs</li>
+                                <li>Network Protocols (SNMP, SSH)</li>
+                            </ul>
+                        </div>
+
+                        <div class="expertise-card">
+                            <div class="expertise-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <path d="M3 9h18M9 21V9"/>
+                                </svg>
+                            </div>
+                            <h4>Architecture Patterns</h4>
+                            <ul>
+                                <li>Microservices Architecture</li>
+                                <li>Model-Agnostic Design</li>
+                                <li>Horizontal & Vertical Scaling</li>
+                                <li>Service Discovery & Mesh</li>
+                                <li>Event-Driven Systems</li>
+                            </ul>
+                        </div>
+
+                        <div class="expertise-card">
+                            <div class="expertise-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                </svg>
+                            </div>
+                            <h4>Network Operations</h4>
+                            <ul>
+                                <li>Network Device Management</li>
+                                <li>Topology Discovery & Mapping</li>
+                                <li>Performance Monitoring</li>
+                                <li>Alarm Correlation & Analysis</li>
+                                <li>Automation Workflows</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="projects-showcase">
+                        <h3>Featured Projects</h3>
+                        <div class="projects-grid">
+                            <div class="project-card" onclick="window.open('https://github.com/saichler/l8myfamiliy', '_blank')">
+                                <h4>L8MyFamily</h4>
+                                <p>Family location tracking application with real-time GPS updates, multi-device support, and secure encrypted communication.</p>
+                                <div class="project-tech">
+                                    <span class="tech-tag">Go</span>
+                                    <span class="tech-tag">Android</span>
+                                    <span class="tech-tag">WebSocket</span>
+                                    <span class="tech-tag">GPS</span>
+                                </div>
+                            </div>
+
+                            <div class="project-card" onclick="window.open('https://github.com/saichler/layer8', '_blank')">
+                                <h4>Layer8</h4>
+                                <p>Advanced network communication framework providing virtual network overlay, service discovery, and intelligent message routing for distributed systems.</p>
+                                <div class="project-tech">
+                                    <span class="tech-tag">Go</span>
+                                    <span class="tech-tag">Networking</span>
+                                    <span class="tech-tag">Service Discovery</span>
+                                </div>
+                            </div>
+
+                            <div class="project-card" onclick="window.open('https://github.com/saichler/l8services', '_blank')">
+                                <h4>L8Services</h4>
+                                <p>Model-agnostic services framework enabling universal service adaptation to any data structure without code modifications.</p>
+                                <div class="project-tech">
+                                    <span class="tech-tag">Go</span>
+                                    <span class="tech-tag">Model-Agnostic</span>
+                                    <span class="tech-tag">Microservices</span>
+                                </div>
+                            </div>
+
+                            <div class="project-card" onclick="window.open('https://github.com/saichler/reflect', '_blank')">
+                                <h4>Reflect</h4>
+                                <p>Dynamic type introspection and model adaptation system using Go reflection capabilities for building truly agnostic services.</p>
+                                <div class="project-tech">
+                                    <span class="tech-tag">Go Reflection</span>
+                                    <span class="tech-tag">Dynamic Types</span>
+                                    <span class="tech-tag">Code Generation</span>
+                                </div>
+                            </div>
+
+                            <div class="project-card" onclick="window.open('https://github.com/saichler/l8orm', '_blank')">
+                                <h4>L8ORM</h4>
+                                <p>Object-relational mapping framework with advanced caching, transaction management, and automatic schema generation.</p>
+                                <div class="project-tech">
+                                    <span class="tech-tag">Go</span>
+                                    <span class="tech-tag">PostgreSQL</span>
+                                    <span class="tech-tag">ORM</span>
+                                </div>
+                            </div>
+
+                            <div class="project-card" onclick="window.open('https://github.com/saichler/l8web', '_blank')">
+                                <h4>L8Web</h4>
+                                <p>Web services framework with modern UI components, REST APIs, and WebSocket support for building responsive interfaces.</p>
+                                <div class="project-tech">
+                                    <span class="tech-tag">Go</span>
+                                    <span class="tech-tag">REST APIs</span>
+                                    <span class="tech-tag">WebSocket</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="philosophy-section">
+                        <h3>Development Philosophy</h3>
+                        <div class="philosophy-content">
+                            <div class="philosophy-item">
+                                <div class="philosophy-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Simplicity Through Abstraction</h4>
+                                    <p>Complex problems deserve elegant solutions. Creating abstractions that hide complexity while maintaining flexibility and performance.</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-item">
+                                <div class="philosophy-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        <path d="M9 12l2 2 4-4"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Model-Agnostic Design</h4>
+                                    <p>Building systems that adapt to changing requirements without code modifications. Future-proofing through intelligent abstraction layers.</p>
+                                </div>
+                            </div>
+                            <div class="philosophy-item">
+                                <div class="philosophy-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M23 6l-9.5 9.5-5-5L1 18"/>
+                                        <path d="M17 6h6v6"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Scalable by Design</h4>
+                                    <p>Every component should scale independently. Horizontal and vertical scaling capabilities built into the foundation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-section">
+                        <h3>Connect & Collaborate</h3>
+                        <div class="contact-links">
+                            <a href="https://github.com/saichler" class="contact-link" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                                <span>GitHub Portfolio</span>
+                            </a>
+                            <a href="https://github.com/saichler/l8myfamiliy" class="contact-link" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                <span>L8MyFamily Project</span>
+                            </a>
+                            <a href="https://github.com/saichler/l8myfamiliy/issues" class="contact-link" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                                </svg>
+                                <span>Discussions & Issues</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

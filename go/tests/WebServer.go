@@ -9,7 +9,6 @@ import (
 	"github.com/saichler/l8types/go/ifs"
 	"github.com/saichler/l8utils/go/utils/ipsegment"
 	"github.com/saichler/l8web/go/web/server"
-	"github.com/saichler/probler/go/prob/common"
 )
 
 func startWebServer(port int, cert string) {
@@ -18,7 +17,7 @@ func startWebServer(port int, cert string) {
 		Port:           port,
 		Authentication: false,
 		CertName:       cert,
-		Prefix:         common.PREFIX,
+		Prefix:         "/my-family/",
 	}
 	svr, err := server.NewRestServer(serverConfig)
 	if err != nil {

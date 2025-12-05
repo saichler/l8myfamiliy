@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - My Family Locator</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Header with App Logo and Title -->
+            <div class="login-header">
+                <div class="header-icon">
+                    <svg viewBox="0 0 64 64" width="64" height="64">
+                        <defs>
+                            <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4a5568"/>
+                                <stop offset="100%" style="stop-color:#2d3748"/>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#iconGradient)" d="M32 4C20 4 12 14 12 26C12 44 32 60 32 60C32 60 52 44 52 26C52 14 44 4 32 4Z"/>
+                        <circle cx="32" cy="24" r="12" fill="#e2e8f0"/>
+                        <circle cx="28" cy="22" r="4" fill="#4a5568"/>
+                        <circle cx="36" cy="22" r="4" fill="#4a5568"/>
+                        <ellipse cx="32" cy="30" rx="8" ry="4" fill="#4a5568"/>
+                    </svg>
+                </div>
+                <h1 id="app-title" class="app-title">My Family Locator</h1>
+                <p id="app-description" class="app-description">Sign in to continue</p>
+            </div>
+
+            <!-- Login Form Section -->
+            <div class="login-form">
+                <!-- Error Message -->
+                <div id="error-message" class="error-message">
+                    <p id="error-text"></p>
+                </div>
+
+                <!-- Login Section -->
+                <div id="login-section">
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" placeholder="Enter your username" autocomplete="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+                        </div>
+                        <div id="remember-me-section" class="remember-me">
+                            <input type="checkbox" id="remember-me" name="remember-me">
+                            <label for="remember-me">Remember me</label>
+                        </div>
+                        <button type="submit" id="login-btn" class="btn-login">
+                            <span id="btn-spinner" class="spinner" style="display: none;"></span>
+                            <span id="btn-text">Login</span>
+                        </button>
+                    </form>
+                    <div class="register-link">
+                        <span>Don't have an account?</span>
+                        <a href="/register/">Register</a>
+                    </div>
+                </div>
+
+                <!-- TFA Verify Section -->
+                <div id="tfa-section" class="tfa-section">
+                    <form id="tfa-form">
+                        <p id="tfa-instructions" class="tfa-instructions">
+                            Enter the 6-digit code from your authenticator app
+                        </p>
+                        <div class="form-group">
+                            <input type="text" id="tfa-code" class="tfa-input" placeholder="000000" maxlength="6" pattern="[0-9]{6}" autocomplete="one-time-code" required>
+                        </div>
+                        <button type="submit" class="btn-login">
+                            <span id="tfa-spinner" class="spinner" style="display: none;"></span>
+                            <span id="tfa-btn-text">Verify</span>
+                        </button>
+                    </form>
+                    <a id="back-to-login" class="back-link">Back to login</a>
+                </div>
+
+                <!-- TFA Setup Section -->
+                <div id="tfa-setup-section" class="tfa-section">
+                    <div id="tfa-setup-loading" class="tfa-loading">
+                        <span class="spinner"></span>
+                        <p>Loading QR code...</p>
+                    </div>
+                    <div id="tfa-setup-content" class="tfa-setup-content" style="display: none;">
+                        <p class="tfa-setup-instructions">Scan with your authenticator app</p>
+                        <div class="tfa-setup-row">
+                            <div class="tfa-qr-container">
+                                <img id="tfa-qr-image" src="" alt="TFA QR Code">
+                            </div>
+                            <div class="tfa-setup-right">
+                                <div class="tfa-secret-section">
+                                    <p class="tfa-secret-label">Manual entry:</p>
+                                    <code id="tfa-secret-code"></code>
+                                </div>
+                                <form id="tfa-setup-form">
+                                    <input type="text" id="tfa-setup-code" class="tfa-input-small" placeholder="000000" maxlength="6" pattern="[0-9]{6}" autocomplete="one-time-code" required>
+                                    <button type="submit" class="btn-login btn-small">
+                                        <span id="tfa-setup-spinner" class="spinner" style="display: none;"></span>
+                                        <span id="tfa-setup-btn-text">Verify</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tfa-setup-error" class="tfa-error" style="display: none;">
+                        <p id="tfa-setup-error-message"></p>
+                    </div>
+                    <a id="back-to-login-setup" class="back-link">Back to login</a>
+                </div>
+            </div>
+
+            <!-- Footer with Layer 8 Branding -->
+            <div class="login-footer">
+                <div class="ecosystem-branding">
+                    <img src="Layer8Logo.gif" alt="Layer 8" class="ecosystem-logo" onerror="this.style.display='none'">
+                    <span class="ecosystem-text">Layer 8 Ecosystem</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>

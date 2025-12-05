@@ -48,6 +48,26 @@ type Config struct {
 	SkipTLSVerify *bool  `json:"skip_tls_verify,omitempty"`
 }
 
+// AuthResponse represents the response from the /auth endpoint
+type AuthResponse struct {
+	Token    string `json:"token"`
+	NeedTfa  bool   `json:"needTfa"`
+	SetupTfa bool   `json:"setupTfa"`
+}
+
+// TfaVerifyRequest represents the request body for TFA verification
+type TfaVerifyRequest struct {
+	UserID string `json:"userId"`
+	Code   string `json:"code"`
+	Bearer string `json:"bearer"`
+}
+
+// TfaVerifyResponse represents the response from the /tfaVerify endpoint
+type TfaVerifyResponse struct {
+	Ok    bool   `json:"ok"`
+	Error string `json:"error,omitempty"`
+}
+
 func init() {
 	configDir, err := os.UserConfigDir()
 	if err != nil {
@@ -296,6 +316,33 @@ func authenticate() error {
 		return fmt.Errorf("failed to read auth response: %w", err)
 	}
 
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("authentication failed: %s", strings.TrimSpace(string(body)))
+	}
+
+	// Try to parse as JSON first (for TFA detection)
+	var authResp AuthResponse
+	if err := json.Unmarshal(body, &authResp); err == nil {
+		// Check if TFA setup is required
+		if authResp.SetupTfa {
+			return fmt.Errorf("TFA setup required - please complete TFA setup via web browser first")
+		}
+
+		// Check if TFA verification is required
+		if authResp.NeedTfa {
+			log.Printf("Two-factor authentication required")
+			return handleTfaVerification(authResp.Token)
+		}
+
+		// Normal successful auth with token in JSON
+		if authResp.Token != "" {
+			bearerToken = authResp.Token
+			log.Printf("Authentication successful")
+			return nil
+		}
+	}
+
+	// Fallback: treat response as plain token string (legacy support)
 	token := strings.TrimSpace(string(body))
 	if token == "" {
 		return fmt.Errorf("authentication failed: empty response")
@@ -306,8 +353,82 @@ func authenticate() error {
 	return nil
 }
 
+func handleTfaVerification(pendingToken string) error {
+	reader := bufio.NewReader(os.Stdin)
+
+	for attempts := 0; attempts < 3; attempts++ {
+		fmt.Print("Enter 6-digit TFA code from authenticator app: ")
+		code, err := reader.ReadString('\n')
+		if err != nil {
+			return fmt.Errorf("failed to read TFA code: %w", err)
+		}
+
+		code = strings.TrimSpace(code)
+		if len(code) != 6 {
+			fmt.Println("Invalid code. Please enter exactly 6 digits.")
+			continue
+		}
+
+		err = verifyTfa(pendingToken, code)
+		if err == nil {
+			return nil
+		}
+
+		log.Printf("TFA verification failed: %v", err)
+		if attempts < 2 {
+			fmt.Println("Please try again.")
+		}
+	}
+
+	return fmt.Errorf("TFA verification failed after 3 attempts")
+}
+
+func verifyTfa(pendingToken, code string) error {
+	tfaURL := strings.TrimSuffix(website, "/") + "/tfaVerify"
+
+	tfaReq := TfaVerifyRequest{
+		UserID: user,
+		Code:   code,
+		Bearer: pendingToken,
+	}
+	data, err := json.Marshal(tfaReq)
+	if err != nil {
+		return fmt.Errorf("failed to marshal TFA request: %w", err)
+	}
+
+	client := getHTTPClient()
+	resp, err := client.Post(tfaURL, "application/json", bytes.NewReader(data))
+	if err != nil {
+		return fmt.Errorf("TFA verification request failed: %w", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("failed to read TFA response: %w", err)
+	}
+
+	var tfaResp TfaVerifyResponse
+	if err := json.Unmarshal(body, &tfaResp); err != nil {
+		return fmt.Errorf("failed to parse TFA response: %w", err)
+	}
+
+	if !tfaResp.Ok {
+		errMsg := tfaResp.Error
+		if errMsg == "" {
+			errMsg = "invalid verification code"
+		}
+		return fmt.Errorf("%s", errMsg)
+	}
+
+	// TFA verification successful
+	bearerToken = pendingToken
+	log.Printf("TFA verification successful")
+	return nil
+}
+
 func registerDevice() error {
-	deviceEndpoint := strings.TrimSuffix(website, "/") + "/probler/53/Family"
+	deviceEndpoint := strings.TrimSuffix(website, "/") + "/my-family/53/Family"
 
 	deviceReq := map[string]string{
 		"id":       deviceID,
@@ -345,7 +466,7 @@ func registerDevice() error {
 	}
 
 	log.Printf("Device registered: %s (%s)", deviceName, deviceID)
-	log.Printf("Response from /probler/53/Family: %s", string(body))
+	log.Printf("Response from /my-family/53/Family: %s", string(body))
 	return nil
 }
 
@@ -362,7 +483,7 @@ func main() {
 		log.Fatalf("Failed to register device: %v", err)
 	}
 
-	locationEndpoint := strings.TrimSuffix(website, "/") + "/probler/53/Location"
+	locationEndpoint := strings.TrimSuffix(website, "/") + "/my-family/53/Location"
 	log.Printf("Starting location agent for device: %s", deviceID)
 	log.Printf("Posting to endpoint: %s", locationEndpoint)
 	log.Printf("Using free location services (GeoClue -> IP geolocation fallback)")
@@ -458,7 +579,7 @@ func postLocation(location *l8myfamily.Location) error {
 		return fmt.Errorf("failed to marshal location: %w", err)
 	}
 
-	locationEndpoint := strings.TrimSuffix(website, "/") + "/probler/53/Location"
+	locationEndpoint := strings.TrimSuffix(website, "/") + "/my-family/53/Location"
 
 	req, err := http.NewRequest("POST", locationEndpoint, bytes.NewReader(data))
 	if err != nil {

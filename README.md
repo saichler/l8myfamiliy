@@ -173,9 +173,9 @@ Location sources (in order of preference):
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/auth` | POST | Authenticate and receive bearer token |
-| `/probler/53/Family` | GET | List all devices |
-| `/probler/53/Family` | POST | Register a device |
-| `/probler/53/Location` | POST | Update device location |
+| `/my-family/53/Family` | GET | List all devices |
+| `/my-family/53/Family` | POST | Register a device |
+| `/my-family/53/Location` | POST | Update device location |
 
 ### Location Payload
 

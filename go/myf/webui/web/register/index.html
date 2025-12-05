@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - My Family Locator</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-card">
+            <!-- Header with App Logo and Title -->
+            <div class="register-header">
+                <div class="header-icon">
+                    <svg viewBox="0 0 64 64" width="56" height="56">
+                        <defs>
+                            <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4a5568"/>
+                                <stop offset="100%" style="stop-color:#2d3748"/>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#iconGradient)" d="M32 4C20 4 12 14 12 26C12 44 32 60 32 60C32 60 52 44 52 26C52 14 44 4 32 4Z"/>
+                        <circle cx="32" cy="24" r="12" fill="#e2e8f0"/>
+                        <circle cx="28" cy="22" r="4" fill="#4a5568"/>
+                        <circle cx="36" cy="22" r="4" fill="#4a5568"/>
+                        <ellipse cx="32" cy="30" rx="8" ry="4" fill="#4a5568"/>
+                    </svg>
+                </div>
+                <h1 class="app-title">Create Account</h1>
+                <p class="app-description">Join your family today</p>
+            </div>
+
+            <!-- Register Form Section -->
+            <div class="register-form">
+                <!-- 2FA Notice -->
+                <div class="tfa-notice">
+                    <span class="tfa-notice-icon">&#128274;</span>
+                    <div class="tfa-notice-text">
+                        <strong>Note:</strong> For your security, new accounts use 2FA.<br>
+                        You'll set it up during your first login.
+                    </div>
+                </div>
+
+                <!-- Error/Success Message -->
+                <div id="message" class="message"></div>
+
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="user">Username</label>
+                        <input type="text" id="user" name="user" placeholder="Enter your username" autocomplete="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="new-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="captcha">Captcha</label>
+                        <div class="captcha-container">
+                            <img id="captcha-image" alt="Captcha" src="">
+                            <button type="button" id="refresh-captcha" class="btn-refresh" title="Refresh Captcha">&#8635;</button>
+                        </div>
+                        <input type="text" id="captcha" name="captcha" placeholder="Enter captcha text" autocomplete="off" required>
+                    </div>
+                    <button type="submit" id="register-btn" class="btn-register">
+                        <span id="btn-spinner" class="spinner" style="display: none;"></span>
+                        <span id="btn-text">Register</span>
+                    </button>
+                </form>
+
+                <div class="login-link">
+                    <span>Already have an account?</span>
+                    <a href="/login/">Login</a>
+                </div>
+            </div>
+
+            <!-- Footer with Layer 8 Branding -->
+            <div class="register-footer">
+                <div class="ecosystem-branding">
+                    <img src="/login/Layer8Logo.gif" alt="Layer 8" class="ecosystem-logo" onerror="this.style.display='none'">
+                    <span class="ecosystem-text">Layer 8 Ecosystem</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="register.js"></script>
+</body>
+</html>
