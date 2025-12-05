@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -176,36 +177,101 @@ public class MainActivity extends AppCompatActivity {
         new Thread(() -> {
             try {
                 Mfagent.authenticate();
-
-                statusText.post(() -> statusText.setText("Status: Registering device..."));
-                Mfagent.registerDevice();
-
-                try {
-                    Mfagent.saveConfig();
-                } catch (Exception e) {
-                    // Log but don't fail
+                completeRegistration();
+            } catch (Exception e) {
+                String errorMsg = e.getMessage();
+                if (errorMsg != null && errorMsg.contains("TFA_REQUIRED")) {
+                    // TFA is required - show TFA input dialog
+                    runOnUiThread(() -> showTfaDialog());
+                } else {
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        statusText.setText("Status: Failed");
+                        startButton.setEnabled(true);
+                    });
                 }
+            }
+        }).start();
+    }
 
-                runOnUiThread(() -> {
-                    deviceIdInput.setText(Mfagent.getDeviceID());
+    private void showTfaDialog() {
+        statusText.setText("Status: TFA Required");
 
-                    Intent serviceIntent = new Intent(this, LocationService.class);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        startForegroundService(serviceIntent);
-                    } else {
-                        startService(serviceIntent);
+        final EditText tfaInput = new EditText(this);
+        tfaInput.setHint("Enter 6-digit code");
+        tfaInput.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+        tfaInput.setMaxLines(1);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Two-Factor Authentication")
+                .setMessage("Enter the 6-digit code from your authenticator app")
+                .setView(tfaInput)
+                .setCancelable(false)
+                .setPositiveButton("Verify", (dialog, which) -> {
+                    String code = tfaInput.getText().toString().trim();
+                    if (code.length() != 6) {
+                        Toast.makeText(this, "Please enter a 6-digit code", Toast.LENGTH_SHORT).show();
+                        startButton.setEnabled(true);
+                        statusText.setText("Status: Stopped");
+                        return;
                     }
-                    Toast.makeText(this, "Device registered - tracking started", Toast.LENGTH_SHORT).show();
-                    updateStatus();
-                });
+                    statusText.setText("Status: Verifying TFA...");
+                    verifyTfaCode(code);
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    startButton.setEnabled(true);
+                    statusText.setText("Status: Stopped");
+                    Mfagent.clearTfaState();
+                })
+                .show();
+    }
+
+    private void verifyTfaCode(String code) {
+        new Thread(() -> {
+            try {
+                Mfagent.verifyTfa(code);
+                completeRegistration();
             } catch (Exception e) {
                 runOnUiThread(() -> {
-                    Toast.makeText(this, "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "TFA verification failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     statusText.setText("Status: Failed");
                     startButton.setEnabled(true);
+                    Mfagent.clearTfaState();
                 });
             }
         }).start();
+    }
+
+    private void completeRegistration() {
+        try {
+            runOnUiThread(() -> statusText.setText("Status: Registering device..."));
+            Mfagent.registerDevice();
+
+            try {
+                Mfagent.saveConfig();
+            } catch (Exception e) {
+                // Log but don't fail
+            }
+
+            runOnUiThread(() -> {
+                deviceIdInput.setText(Mfagent.getDeviceID());
+
+                Intent serviceIntent = new Intent(this, LocationService.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(serviceIntent);
+                } else {
+                    startService(serviceIntent);
+                }
+                Toast.makeText(this, "Device registered - tracking started", Toast.LENGTH_SHORT).show();
+                updateStatus();
+            });
+        } catch (Exception e) {
+            runOnUiThread(() -> {
+                Toast.makeText(this, "Registration failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                statusText.setText("Status: Failed");
+                startButton.setEnabled(true);
+            });
+        }
     }
 
     private void stopTracking() {

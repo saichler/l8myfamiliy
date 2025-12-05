@@ -83,12 +83,17 @@ else
     fi
 fi
 
-# Find and report APK location
-APK_PATH="$SCRIPT_DIR/app/build/outputs/apk/debug/app-debug.apk"
-if [ -f "$APK_PATH" ]; then
+# Find and copy APK to final location
+BUILD_APK="$SCRIPT_DIR/app/build/outputs/apk/debug/app-debug.apk"
+APK_PATH="$SCRIPT_DIR/my-family.apk"
+if [ -f "$BUILD_APK" ]; then
+    cp "$BUILD_APK" "$APK_PATH"
+    mkdir -p ~/clients
+    cp "$APK_PATH" ~/clients/
     echo ""
     echo "=== Build Successful ==="
     echo "APK location: $APK_PATH"
+    echo "Copied to: ~/clients/my-family.apk"
     echo ""
     echo "To install on device:"
     echo "  adb install $APK_PATH"

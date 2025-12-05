@@ -61,8 +61,8 @@
                     // Fall through to prompt for family name
                 }
             }
-            // If no family name stored, use a default or prompt
-            familyName = localStorage.getItem('rememberedUser') || 'Family';
+            // If no family name stored, use current logged-in user
+            familyName = localStorage.getItem('loggedInUser') || localStorage.getItem('rememberedUser') || 'Family';
             return true;
         }
 
@@ -502,6 +502,7 @@
      */
     function handleLogout() {
         localStorage.removeItem('bearerToken');
+        localStorage.removeItem('loggedInUser');
         localStorage.removeItem('rememberedUser');
         sessionStorage.removeItem(SESSION_KEY);
         sessionStorage.removeItem('authToken');

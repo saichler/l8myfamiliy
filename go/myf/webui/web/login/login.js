@@ -160,7 +160,10 @@ function handleLoginSuccess(result, username, rememberMe) {
     // Store bearer token
     localStorage.setItem('bearerToken', result.token);
 
-    // Handle remember me
+    // Always store current logged-in user for session
+    localStorage.setItem('loggedInUser', username);
+
+    // Handle remember me (for pre-filling username on next visit)
     if (rememberMe) {
         localStorage.setItem('rememberedUser', username);
     } else {
@@ -494,6 +497,7 @@ function escapeHtml(text) {
 // Logout function (can be called from other pages)
 function logout() {
     localStorage.removeItem('bearerToken');
+    localStorage.removeItem('loggedInUser');
     localStorage.removeItem('tfaSetupRequired');
     if (window.location.pathname.includes('/login')) {
         window.location.reload();
