@@ -33,6 +33,7 @@ func Activate(vnic ifs.IVNic) {
 	serviceConfig.SetVoter(true)
 	serviceConfig.SetTransactional(false)
 	serviceConfig.SetPrimaryKeys("Id")
+	serviceConfig.SetStore(newDeviceStorage())
 	serviceConfig.SetWebService(web.New(ServiceName, ServiceArea,
 		&l8myfamily.Device{}, &l8web.L8Empty{},
 		nil, nil,
