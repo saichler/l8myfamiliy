@@ -34,12 +34,9 @@ func Activate(vnic ifs.IVNic) {
 	serviceConfig.SetTransactional(false)
 	serviceConfig.SetPrimaryKeys("Id")
 	serviceConfig.SetStore(newDeviceStorage())
-	serviceConfig.SetWebService(web.New(ServiceName, ServiceArea,
-		&l8myfamily.Device{}, &l8web.L8Empty{},
-		nil, nil,
-		nil, nil,
-		nil, nil,
-		&l8api.L8Query{}, &l8myfamily.DeviceList{}))
+	webs := web.New(ServiceName, ServiceArea, 0)
+	webs.AddEndpoint(&l8myfamily.Device{}, ifs.POST, &l8web.L8Empty{})
+	webs.AddEndpoint(&l8api.L8Query{}, ifs.GET, &l8myfamily.DeviceList{})
 	base.Activate(serviceConfig, vnic)
 }
 

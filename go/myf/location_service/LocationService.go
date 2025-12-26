@@ -29,25 +29,21 @@ func Activate(vnic ifs.IVNic) {
 	serviceConfig.SetVoter(true)
 	serviceConfig.SetTransactional(false)
 	serviceConfig.SetPrimaryKeys("DeviceId")
-	serviceConfig.SetWebService(web.New(ServiceName, ServiceArea,
-		&l8myfamily.Location{}, &l8web.L8Empty{},
-		nil, nil,
-		nil, nil,
-		nil, nil,
-		nil, nil))
+	webs := web.New(ServiceName, ServiceArea, 0)
+	webs.AddEndpoint(&l8myfamily.Location{}, ifs.POST, &l8web.L8Empty{})
 	base.Activate(serviceConfig, vnic)
 }
 
 type LocationCallback struct{}
 
-func (lc *LocationCallback) Before(elem interface{}, action ifs.Action, notify bool, vnic ifs.IVNic) (interface{}, error) {
-	return nil, nil
+func (lc *LocationCallback) Before(elem interface{}, action ifs.Action, notify bool, vnic ifs.IVNic) (interface{}, bool, error) {
+	return nil, true, nil
 }
 
-func (lc *LocationCallback) After(elem interface{}, action ifs.Action, notify bool, vnic ifs.IVNic) (interface{}, error) {
+func (lc *LocationCallback) After(elem interface{}, action ifs.Action, notify bool, vnic ifs.IVNic) (interface{}, bool, error) {
 	if action == ifs.POST || action == ifs.PUT {
 		l := elem.(*l8myfamily.Location)
 		device_service.UpdateDevice(l.DeviceId, l.Longitude, l.Latitude, vnic)
 	}
-	return nil, nil
+	return nil, true, nil
 }

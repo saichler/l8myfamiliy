@@ -9,7 +9,6 @@ import (
 	"github.com/saichler/l8myfamiliy/go/myf/device_service"
 	"github.com/saichler/l8myfamiliy/go/myf/location_service"
 	"github.com/saichler/l8myfamiliy/go/types/l8myfamily"
-	"github.com/saichler/l8reflect/go/reflect/helping"
 	"github.com/saichler/l8reflect/go/reflect/introspecting"
 	"github.com/saichler/l8services/go/services/manager"
 	"github.com/saichler/l8types/go/ifs"
@@ -74,12 +73,8 @@ func startWebServer(port int, cert string) {
 
 func CreateVnic(vnet uint32, name string) ifs.IVNic {
 	resources := CreateResources(name)
-
-	node, _ := resources.Introspector().Inspect(&l8myfamily.Device{})
-	helping.AddPrimaryKeyDecorator(node, "Id")
-
-	node, _ = resources.Introspector().Inspect(&l8myfamily.Location{})
-	helping.AddPrimaryKeyDecorator(node, "DeviceId")
+	resources.Introspector().Decorators().AddPrimaryKeyDecorator(&l8myfamily.Device{}, "Id")
+	resources.Introspector().Decorators().AddPrimaryKeyDecorator(&l8myfamily.Location{}, "DeviceId")
 
 	nic := vnic.NewVirtualNetworkInterface(resources, nil)
 	nic.Resources().SysConfig().KeepAliveIntervalSeconds = 60

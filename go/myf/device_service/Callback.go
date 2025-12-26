@@ -9,14 +9,14 @@ import (
 
 type DeviceCallback struct{}
 
-func (lc *DeviceCallback) Before(elem interface{}, action ifs.Action, notify bool, vnic ifs.IVNic) (interface{}, error) {
+func (lc *DeviceCallback) Before(elem interface{}, action ifs.Action, notify bool, vnic ifs.IVNic) (interface{}, bool, error) {
 	if action == ifs.POST {
 		device := elem.(*l8myfamily.Device)
 		fmt.Println("[Device] ", device.Id, "-", device.FamilyId, "-", device.Name)
 	}
-	return nil, nil
+	return nil, true, nil
 }
 
-func (lc *DeviceCallback) After(elem interface{}, action ifs.Action, notify bool, vnic ifs.IVNic) (interface{}, error) {
-	return nil, nil
+func (lc *DeviceCallback) After(elem interface{}, action ifs.Action, notify bool, vnic ifs.IVNic) (interface{}, bool, error) {
+	return nil, true, nil
 }
