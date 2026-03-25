@@ -16,6 +16,8 @@
 package main
 
 import (
+	"fmt"
+	"github.com/saichler/l8types/go/sec"
 	"time"
 
 	"github.com/saichler/l8bus/go/overlay/health"
@@ -114,10 +116,9 @@ func CreateResources(alias string) ifs.IResources {
 
 	res.Set(registry.NewRegistry())
 
-	sec, err := ifs.LoadSecurityProvider(res)
+	sec, err := sec.LoadSecurityProvider(res)
 	if err != nil {
-		time.Sleep(time.Second * 10)
-		panic(err.Error())
+		fmt.Println("Failed to load security provider")
 	}
 	res.Set(sec)
 
