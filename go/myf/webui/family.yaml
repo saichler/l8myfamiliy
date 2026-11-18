@@ -26,9 +26,11 @@ spec:
         app: family-vnet
     spec:
       hostNetwork: true
+      imagePullSecrets:
+        - name: harbor-pull
       containers:
         - name: family-vnet
-          image: saichler/family-web:latest
+          image: registry.layer-8.dev:44443/my-family/family-web:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 12343

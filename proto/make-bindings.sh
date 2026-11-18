@@ -5,7 +5,7 @@ set -e
 wget https://raw.githubusercontent.com/saichler/l8types/refs/heads/main/proto/api.proto
 
 # Use the protoc image to run protoc.sh and generate the bindings.
-docker run --user "$(id -u):$(id -g)" -e PROTO=family.proto --mount type=bind,source="$PWD",target=/home/proto/ -it saichler/protoc:latest
+docker run --user "$(id -u):$(id -g)" -e PROTO=family.proto --mount type=bind,source="$PWD",target=/home/proto/ -it registry.layer-8.dev:44443/library/protoc:latest
 
 # Now move the generated bindings to the models directory and clean up
 rm api.proto
